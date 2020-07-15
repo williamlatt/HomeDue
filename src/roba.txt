@@ -1,0 +1,405 @@
+<ion-item class="item md in-list ion-focusable item-label hydrated">
+      <ion-avatar slot="start" class="md hydrated">
+        <img src="https://www.gravatar.com/avatar/3?d=monsterid&amp;f=y">
+        <p align="center">{{s.utente.nome.charAt(0)}}{{s.utente.cognome.charAt(0)}}</p>
+      </ion-avatar>
+      <ion-label class="sc-ion-label-md-h sc-ion-label-md-s md hydrated">
+        <h2>{{s.spesa.descrizione}} <font color="red">{{s.spesa.importo}}€</font></h2>
+        <p>{{s.spesa.data_publicazione}}Zio p</p>
+       <ion-item>
+         <ion-label>Date</ion-label>
+       </ion-item>
+      <ion-chip color="success"><b></b>
+        <ion-avatar>
+          <p>{{s.utente.nome.charAt(0)}}{{s.utente.cognome.charAt(0)}}
+          <img src={{s.utente.link}}></p>
+        </ion-avatar>
+      </ion-chip>
+    </ion-label>
+    
+  </ion-item>
+  <div *ngFor="let a of us$ | async">
+*ngIf="s.proprietario == true && s.spesa.id==a.spesa.id && s.utente.id != a.utente.id; else noBlock"
+
+  
+
+   -----------------------------
+   <ion-content fullscreen="" class="md hydrated" style="--offset-top:76px; --offset-bottom:0px;">
+  <ion-searchbar animated showCancelButton="focus" cancelButtonText="X"></ion-searchbar>
+
+
+  <ion-list id="list" class="md list-md hydrated">
+
+    <ion-item class="item md in-list ion-focusable item-label hydrated"  *ngFor="let s of us$ |async">
+      <div *ngFor="let a of us2$ |async">
+        {{a.utente.nome}}
+      </div>
+      <div *ngIf="s.proprietario == true && s.spesa.id==a.spesa.id && s.utente.id != a.utente.id; else noBlock" >
+      <ion-avatar slot="start" class="md hydrated">
+        <img src="https://www.gravatar.com/avatar/3?d=monsterid&amp;f=y">
+        <p align="center">{{s.utente.nome.charAt(0)}}{{s.utente.cognome.charAt(0)}}</p>
+      </ion-avatar>
+      <ion-label class="sc-ion-label-md-h sc-ion-label-md-s md hydrated">
+        <h2>{{s.spesa.descrizione}} <font color="red">{{s.spesa.importo}}€</font></h2>
+        <p>{{s.spesa.dataPubblicazione | date}}</p>
+      </ion-label>
+      <ion-chip  color="success">
+        <ion-avatar>
+          <p>{{s.utente.nome.charAt(0)}}{{s.utente.cognome.charAt(0)}}
+          <img src={{s.utente.link}}></p>
+        </ion-avatar>
+        <p> {{s.importo}}€</p>
+      </ion-chip>
+      
+      <ng-template #noBlock *ngIf="a.proprietario == false && s.spesa.id == a.spesa.id && s.utente.id != a.utente.id; else buonasera ">
+      <ion-chip  color="success">
+        <ion-avatar>
+          <p>{{a.utente.nome.charAt(0)}}{{a.utente.cognome.charAt(0)}}
+          <img src={{a.utente.link}}></p>
+        </ion-avatar>
+        <p> {{a.importo}}€</p>
+      </ion-chip>
+    </ng-template>
+    <ng-template #buonasera>Buonasera</ng-template>
+  </div>
+  </ion-item>
+  </ion-list>
+  <div *ngFor="let a of us2$">
+    {{a.utente.nome}}
+  </div>
+  <ion-infinite-scroll #infiniteScroll (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+-------------------------------
+<ion-content fullscreen="" class="md hydrated" style="--offset-top:76px; --offset-bottom:0px;">
+  <ion-searchbar animated showCancelButton="focus" cancelButtonText="X"></ion-searchbar>
+
+
+  <ion-list id="list" class="md list-md hydrated" >
+    <ng-container *ngFor="let s of s$ |async">
+    
+    <ion-item class="item md in-list ion-focusable item-label hydrated">
+      <ion-grid>
+      <ion-row>
+      
+      <ng-container *ngFor="let u of us2$">
+        <ion-col size = "3">
+      <ng-container *ngIf="u.proprietario==true && u.spesa.id==s.id; else buonasera ">
+         <ion-label>
+          <ion-avatar slot="start" class="md hydrated">
+            <img class="mb-2 small" width="10" height="10%" src="https://www.gravatar.com/avatar/3?d=monsterid&amp;f=y">
+          </ion-avatar>
+          <p align="center">{{u.utente.nome.charAt(0)}}{{u.utente.cognome.charAt(0)}}</p>          
+         </ion-label>
+      </ng-container>
+    </ion-col>
+      <ion-col>
+        <ion-row class="border-bottom">
+          <ng-container *ngIf="u.proprietario==true && u.spesa.id==s.id">
+          <ion-label class="mb-1">
+            <h6>{{s.descrizione}} <font color="red">{{s.importo}}€</font></h6>
+            <p>{{s.dataPubblicazione | date}}</p>
+          </ion-label>
+      </ng-container>
+      </ion-row>
+      <ion-row>
+      <ng-container #buonasera *ngIf=" u.spesa.id==s.id; else ">
+          <ion-label class="sc-ion-label-md-h sc-ion-label-md-s md hydrated">
+            <ion-chip color="success">
+                <p>{{u.utente.nome.charAt(0)}}{{u.utente.cognome.charAt(0)}} {{u.importo}}€</p>
+            </ion-chip>
+          </ion-label>
+        </ng-container>
+      </ion-row>
+      </ion-col>
+      
+        
+  
+  </ng-container>
+</ion-row>
+</ion-grid>
+</ion-item>
+</ng-container>
+  </ion-list>
+
+
+
+  
+  <ion-infinite-scroll #infiniteScroll (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+
+
+
+
+-----------------------------------
+<ion-card-content >
+        Saldo: <font *ngIf=" p.saldo > 0; else minorBlock" color="green">{{p.saldo}}€</font>
+            <ng-template #minorBlock><font color="red" >{{p.saldo}}€</font></ng-template>  
+      <ion-item class="ion-no-padding" lines="none">
+        <b>Partecipanti:</b>
+        <ion-chip>
+          {{p.utente.nome}}
+        </ion-chip>
+      </ion-item>
+        
+      </ion-card-content>
+
+      -------------------------------
+      <ion-header translucent>
+    <ion-toolbar>
+      <ion-title>Pannello aggiunta spese</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content fullscreen class="ion-padding">
+    <ion-fab horizontal="end" vertical="top" slot="fixed" edge>
+      <ion-fab-button size="small" color="success" (click)="dismiss()">
+        <ion-icon name="add-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <form>
+    <ion-grid>
+      <ion-row>
+        <ion-col class="ion-no-padding">
+          <ion-item>
+            <ion-label>Chi ha pagato la spesa?</ion-label>
+            <ion-select multiple="true" cancelText="Cancel" okText="Okay!">
+              <ng-container *ngFor="let ug of ug2$">
+              <ng-container *ngIf="ug.gruppo.id == g$.id">
+              <ion-select-option value="{{ug.utente.id}}">{{ug.utente.nome}} {{ug.utente.cognome}}</ion-select-option>
+              </ng-container>
+            </ng-container>
+            </ion-select>
+            
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          Partecipanti al gruppo:
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-padding">
+        <ng-container *ngFor="let ug of ug2$">
+          <ng-container *ngIf="ug.gruppo.id == g$.id">
+        <ion-chip>
+            <b>{{ug.utente.nome}} {{ug.utente.cognome}}</b>
+          <ion-avatar>
+            <img src={{ug.utente.link}} />
+          </ion-avatar>
+        </ion-chip>
+        </ng-container>
+        </ng-container>
+      </ion-row>
+      <ion-row>
+        <ion-col size="5" class="border">
+          
+            <ion-label position="stacked">Spese</ion-label>
+            <ion-input placeholder="Spesa 1" type="number"> €</ion-input>
+            <ion-input placeholder="Spesa 2" type="number"> €</ion-input>
+            <ion-input placeholder="Spesa 3" type="number"> €</ion-input>
+            <ion-input placeholder="Spesa 4" type="number"> €</ion-input>
+          
+        </ion-col>
+        <ion-col size="7" class="border">
+          <ion-label position="stacked"> Condiviso tra:</ion-label><br />
+          <div class="mb-1">
+            <ion-label position="">
+              <ion-chip size="small">
+                <ion-avatar>
+                  <img
+                    src="https://www.gravatar.com/avatar/1?d=monsterid&amp;f=y"
+                  />
+                </ion-avatar>
+              </ion-chip>
+            </ion-label>
+          </div>
+          <div class="mb-1">
+            <ion-label position="">
+              <ion-chip size="small">
+                <ion-avatar>
+                  <img
+                    src="https://www.gravatar.com/avatar/1?d=monsterid&amp;f=y"
+                  />
+                </ion-avatar> </ion-chip
+              ><ion-chip size="small">
+                <ion-avatar>
+                  <img
+                    src="https://www.gravatar.com/avatar/3?d=monsterid&amp;f=y"
+                  />
+                </ion-avatar> </ion-chip
+              ><ion-chip size="small">
+                <ion-avatar>
+                  <img
+                    src="https://www.gravatar.com/avatar/6?d=monsterid&amp;f=y"
+                  />
+                </ion-avatar>
+              </ion-chip>
+            </ion-label>
+          </div>
+          <div class="mb-1">
+            <ion-label position="">
+                <ion-chip size="small">
+                <ion-avatar>
+                  <img
+                    src="https://www.gravatar.com/avatar/5?d=monsterid&amp;f=y"
+                  />
+                </ion-avatar> </ion-chip
+            ></ion-label>
+        </div>
+            <div class="mb-1">
+            <ion-label position=""
+              ><ion-chip size="small">
+                <ion-avatar>
+                  <img
+                    src="https://www.gravatar.com/avatar/6?d=monsterid&amp;f=y"
+                  />
+                </ion-avatar> </ion-chip
+              ><ion-chip size="small">
+                <ion-avatar>
+                  <img
+                    src="https://www.gravatar.com/avatar/3?d=monsterid&amp;f=y"
+                  />
+                </ion-avatar> </ion-chip
+            ></ion-label>
+          </div>
+        </ion-col>
+      </ion-row>
+      <button (click)="buonasera()">Click to add child component</button>
+      <p #buonasera></p>
+    </ion-grid>
+  </form>
+  </ion-content>
+  -----------------
+  import { GruppoService } from 'src/app/services/gruppo.service';
+import { Utente_gruppoService } from '../../services/utente_gruppo.service';
+import { ModalController, AlertController } from '@ionic/angular';
+import { Placeholder } from '@angular/compiler/src/i18n/i18n_ast';
+import { Observable } from 'rxjs';
+import { Utente_gruppo } from 'src/app/model/utente_gruppo.model';
+import { Gruppo } from 'src/app/model/gruppo.model';
+import { Component, ViewContainerRef, Compiler, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+
+
+@Component({
+  selector: 'app-modalspesa',
+  templateUrl: './modalspesa.component.html',
+  styleUrls: ['./modalspesa.component.scss'],
+})
+
+ implements OnInit {
+@ViewChild('buonasera', {static: false}) a: ElementRef;
+
+  constructor(public modalController: ModalController, public alertController: AlertController,
+              public utente_gruppoService: Utente_gruppoService, public gruppoService: GruppoService,
+              private vcRef: ViewContainerRef, private compiler: Compiler, public renderer: Renderer2) {}
+
+  private gruppo$: Observable<Gruppo>;
+  public g$: Gruppo;
+  public ug2$: Utente_gruppo[];
+  private ug$: Observable<Utente_gruppo[]>;
+
+  ngOnInit() {
+    this.ug$ = this.utente_gruppoService.listaGruppoUtente();
+    this.ug$.subscribe(m => this.ug2$ = m);
+    this.gruppo$ = this.gruppoService.findGruppo(5);
+    this.gruppo$.subscribe(m => this.g$ = m);
+  }
+
+  dismiss() {
+    this.presentAlertPrompt();
+    // using the injected ModalController this page
+    // can "dismiss" itself and optionally pass back data
+    this.modalController.dismiss({
+      'dismissed': true
+    });
+    }
+
+    async presentAlertPrompt() {
+      const alert = await this.alertController.create({
+        header: 'Ripartizione',
+        subHeader:'La somma delle spese è: 167.23€',
+        message:'Come sono ripartite le spese?',
+        inputs: [
+           {
+            name: 'name2',
+            type: 'number',
+            max: '167.23',
+            id: 'name2-id',
+            value: '',
+            placeholder: 'Importo pagato da Piero'
+          },
+          {
+            name: 'name2',
+            type: 'number',
+            id: 'name2-id',
+            max: '167.23',
+            value: '',
+            placeholder: 'Importo pagato da Gigi'
+          }
+        ],
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: () => {
+              console.log('Confirm Cancel');
+            }
+          }, {
+            text: 'Ok',
+            handler: () => {
+              console.log('Confirm Ok');
+            }
+          }
+        ]});
+      await alert.present();
+    }
+
+    buonasera() {
+      let greet = this.renderer.createText('Hello');
+      this.renderer.appendChild(this.a.nativeElement, greet);
+    }
+  }
+
+
+
+-----------------------------------------------------------------------
+<ion-col size="1">
+                        <button class="ion-no-padding" type="button" shape="round" (click)="addNewPartecipante(spesa.controls.partecipanti,i,j)"><ion-icon name="add-outline"></ion-icon></button>
+                    </ion-col>
+                    <ion-col size="11">
+
+
+                    ------------------------------------
+
+ 
+        //this.lastY = (Number(this.lastY) - this.nomi.length).toString(); must be update!!!!!
+        this.nomi.forEach(element2 => {
+          if ( element2.nativeElement.innerHTML !== element.utente.nome.charAt(0) + element.utente.cognome.charAt(0)
+                && element.gruppo.id === this.g$.id
+                && !this.nomi.some(item =>
+                  item.nativeElement.innerHTMl === element.utente.nome.charAt(0) + element.utente.cognome.charAt(0)
+                  && !item.nativeElement.id.split('-')[1].instanceOf(resx) )) {
+            this.selected = element.utente;
+            this.addNewPartecipante(control, ix, resj + count + 1);
+            if(!this.prova.some(item => item.utente.id === this.selected.id)){
+              this.prova.push( {id: (resj + count) + '-' + ix, utente: this.selected});
+              count ++;
+            }
+          }
+          //this.exist(ix, element.utente.id); svuota row e reinserisci tutto!
+        });
+
+        ------------------
+        for (var insta in data){
+              this.totale += insta;
+             /* if (this.totale > this.sommaSpese){
+                this.showErrorToast('La somma delle spese inserite supera il totale di: ' + this.sommaSpese);
+              }*/
+            };

@@ -1,0 +1,52 @@
+<ion-content >
+  <div class='center'>
+    <app-logo ></app-logo>
+    <h1>Crea il tuo account</h1>
+  </div>
+  <form [formGroup]="signupFormModel" class="list-form">
+    <ion-list class="ion-padding">
+        <ion-item>
+          <ion-label position="floating">{{'Nome'}}</ion-label>
+          <ion-input formControlName="nome" type='text'></ion-input>
+        </ion-item>
+          <ion-label position='stacked' *ngIf="signupFormModel.get('nome').touched && signupFormModel.get('nome').invalid "></ion-label>
+        
+        <ion-item >
+          <ion-label position="floating">{{'Cognome'}}</ion-label>
+          <ion-input type='text' formControlName="cognome" ></ion-input>
+        </ion-item>
+          <ion-label position='stacked' *ngIf="signupFormModel.get('cognome').touched && signupFormModel.get('cognome').invalid"></ion-label>
+          
+        
+        <ion-item>
+          <ion-label position="floating">{{'Email'}}</ion-label>
+          <ion-input type='email' formControlName="email" ></ion-input>
+        </ion-item>
+          <ion-label position='stacked'*ngIf="signupFormModel.get('email').touched && signupFormModel.get('email').invalid"><ion-text color="danger small">{{ 'Formato richiesto: a@b.c' }}</ion-text></ion-label>
+          
+        
+        <ion-item>
+          <ion-label position="floating">{{'Username'}}</ion-label>
+          <ion-input type='text' formControlName="username"></ion-input>
+        </ion-item>
+          <ion-label position='stacked' *ngIf="signupFormModel.get('username').touched && signupFormModel.get('username').invalid"></ion-label>
+         
+        
+        <ion-item>
+          <ion-label position="floating">{{'Password'}}</ion-label>
+          <ion-input type="password" formControlName="password"></ion-input>
+        </ion-item>
+          <ion-label position="stacked"*ngIf="signupFormModel.get('password').touched && signupFormModel.get('password').invalid"></ion-label>
+          
+        
+        <br>
+        <ion-button expand="block" shape="round" color="success" (click)="signup()" [disabled]="!signupFormModel.valid" tappable >Registrati</ion-button>
+        <ion-item lines="none">
+          <a class="small" routerLink="/login2">Già Registrato?, Accedi subito!</a>         
+      </ion-item>
+    </ion-list>
+  </form>
+
+
+
+</ion-content>

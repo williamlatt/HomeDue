@@ -1,0 +1,91 @@
+<ion-content fullscreen="" class="md hydrated" style="--offset-top: 76px; --offset-bottom: 0px;">
+  <ion-refresher slot="fixed" #refresher (ionRefresh)="doRefresh()">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+
+  <ion-list id="list" class="md list-md hydrated">
+    <ng-container *ngFor="let s of s$ |async |slice:0:slice;">
+      <ng-container *ngIf="s.gruppo.id === g$.getValue().id">
+      <ion-item-sliding #sliding>
+        <ion-item>
+      <ion-card style="width: 100%;">
+        <ion-card-header class="border-bottom">
+          <ion-card-title><b>{{s.descrizione}}</b></ion-card-title>
+          <ion-card-subtitle>Totale: {{s.importo}} €</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content class="ion-no-padding">
+          <ion-row>
+          <ion-col size="4"  class="border-right text-center">
+            <p>Made by:</p>
+          <ng-container *ngFor="let u of us2$">
+          <ng-container *ngIf="u.proprietario==true && u.spesa.id==s.id;">
+              
+              <img class="rounded-circle small"  src={{u.utente.link}}/> 
+              <p>{{u.utente.nome}} {{u.utente.cognome}}</p> 
+          
+          </ng-container>
+          </ng-container>
+          </ion-col>
+          <ion-col size="8" >
+          <ng-container *ngFor="let u of us2$">
+          <ng-container *ngIf="u.spesa.id==s.id && u.importo != 0 && u.spesa.gruppo.id == g$.getValue().id">
+          <ng-container *ngIf="u.importo >= 0; else red">
+              
+                <ng-container *ngIf="(u.utente.cognome.length + u.utente.nome.length) < 17; else lungo">
+                  <ion-chip color="success" class="padding" style="width: 100%;" >
+                  <ion-label class="">{{u.utente.nome}} {{u.utente.cognome}}</ion-label>
+                  <ion-label class="padding2">{{u.importo}}€</ion-label>
+                </ion-chip>
+              </ng-container> 
+                  <ng-template #lungo>
+                    <ion-chip color="success" class="padding" style="width: 100%;" >
+                    <ion-label class="">{{u.utente.nome}} {{u.utente.cognome.slice(0,5)}}..</ion-label>
+                    <ion-label color="success" class="padding2">{{u.importo}}€</ion-label>
+                  </ion-chip>
+                  </ng-template>
+            </ng-container>
+            <ng-template #red>
+              
+                <ng-container *ngIf="(u.utente.cognome.length + u.utente.nome.length) < 17; else lungo2">
+                  <ion-chip color="danger" class="padding" style="width: 100%;">
+                  <ion-label class="">{{u.utente.nome}} {{u.utente.cognome}}</ion-label>
+                  <ion-label color="danger" class="padding2">{{u.importo}}€</ion-label>
+                </ion-chip>
+              </ng-container>
+                  <ng-template #lungo2>
+                    <ion-chip color="danger" class="padding" style="width: 100%;">
+                    <ion-label class="">{{u.utente.nome}} {{u.utente.cognome.slice(0,5)}}..</ion-label>
+                    <ion-label color="danger" class="padding2">{{u.importo}}€</ion-label>
+                  </ion-chip>
+                  </ng-template>
+               
+            </ng-template>
+          </ng-container>
+          </ng-container> 
+          </ion-col>
+        </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-item>
+    <ion-item-options>
+      <ion-item-option color="danger" (click)="delete(s, sliding)">
+        <ion-icon slot="bottom" name="trash-outline"></ion-icon>
+        Cancella
+      </ion-item-option>
+      <ion-item-option *ngIf="s.link !== ''" (click)="openPopover(s)">
+        <ion-icon slot="bottom" name="image-outline"></ion-icon> Immagine
+      </ion-item-option>
+    </ion-item-options>
+    </ion-item-sliding>
+  </ng-container>
+    </ng-container>
+    
+   
+  </ion-list>
+
+  <ion-infinite-scroll #infiniteScroll (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

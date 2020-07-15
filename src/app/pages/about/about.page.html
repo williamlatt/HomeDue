@@ -1,0 +1,40 @@
+
+  <ion-content fullscreen >
+    <ion-slides [options]="slideOpts" >
+    
+     
+      <ion-slide #slide >
+        <div class="slide">
+            <ion-card-header>
+              <ng-container *ngIf="g$.getValue().nome === undefined "> <ion-card-subtitle >Casa <ion-icon name="home"></ion-icon></ion-card-subtitle> </ng-container>
+              <ion-card-title> {{g$.getValue().nome}}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <div class="chart-container" style="position: auto;">
+                <ion-row>
+                  <ion-col>
+                    <ng-container *ngIf="g$.getValue().nome === undefined "><b> Seleziona un gruppo dal Menu per iniziare!</b><br><p><ion-icon name="arrow-undo-outline"></ion-icon></p> </ng-container>
+                    <canvas #barChart style="height:35vh; width:80vw"></canvas>
+                    
+                  </ion-col>
+                </ion-row>
+              </div>
+                <br>
+              <ion-label position="center">Statistiche debiti:</ion-label><br> 
+               <ng-container *ngFor="let s of calcoloSaldi(g$.getValue().id)">
+              <font color="red">{{s.da.nome}}  </font><ion-icon name="arrow-forward-outline"></ion-icon> {{s.importo}} € <font color="green"> {{s.per.nome}}</font><br>
+              
+            </ng-container>
+            </ion-card-content>
+            <ion-button (click)="presentPopoverSaldo(null, g$.getValue().id)"><ion-icon name="cash-outline" class="mr-2" >  </ion-icon> Salda debiti</ion-button>
+            
+        </div>
+      </ion-slide>
+    
+ 
+
+     
+
+    </ion-slides>
+  </ion-content>
+  

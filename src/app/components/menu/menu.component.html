@@ -1,0 +1,134 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+  integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+  integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+  integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+  integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+<ion-menu side="start" menuId="first" contentId="main" swipe-gesture="true">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>MyDues</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ng-container *ngIf="(utente$ | async) as utente">
+    <ion-row>
+      <ion-col align="center">
+        <ion-avatar class="mt-4" style="margin:auto;">
+          <img src={{utente.link}}>
+        </ion-avatar>
+        <ion-label><b>{{utente.nome + ' ' + utente.cognome}}</b></ion-label>
+      </ion-col>
+    </ion-row>
+  </ng-container>
+  <ion-content>
+    <div #collect >
+    <ng-container *ngIf="(utente$ | async) as utente">
+      <ng-container *ngFor="let g of g$">
+        <ng-container *ngFor="let p of ug2$">
+          <ng-container *ngIf="stored$.getValue().id === g.id; else other">
+          <ion-card  #card *ngIf="g.id==p.gruppo.id && p.utente.id==utente.id">
+              <ion-item  button detail="true" class="ion-activated" (click)="setGruppo(p.gruppo)">
+                <ion-card-header>
+                  <ion-card-subtitle>Casa <ion-icon name="home"></ion-icon>
+                  </ion-card-subtitle>
+                  <ion-card-title color="primary"><b>{{p.gruppo.nome}}</b></ion-card-title><br>
+                  Saldo personale: <font *ngIf=" p.saldo > 0; else minorBlock" color="green">{{p.saldo}}€</font><br>
+                  Codice del gruppo:
+                  <ion-chip>
+                    {{g.codice}}
+                    <ion-icon name="people-circle-outline"></ion-icon> 
+                     
+                  </ion-chip>
+                  <ng-template #minorBlock>
+                    <font color="red">{{p.saldo}}€</font>
+                  </ng-template>
+                </ion-card-header>
+              </ion-item>
+            
+            
+            <ion-card-content *ngIf="g.id==p.gruppo.id && p.utente.id==utente.id">
+              <b>Partecipanti:</b><br>
+                <ng-container *ngFor="let p of ug2$">
+                  <ion-chip *ngIf="g.id==p.gruppo.id &&  p.utente.id!=utente.id">
+                    <b>{{p.utente.nome}} {{p.utente.cognome}}</b>
+                  <ion-avatar>
+                    <img src={{p.utente.link}} />
+                  </ion-avatar>
+                </ion-chip>
+              </ng-container>
+             
+            </ion-card-content>
+          </ion-card>
+
+
+         
+
+
+        </ng-container>
+        <ng-template #other>
+          <ion-card #card *ngIf="g.id==p.gruppo.id && p.utente.id==utente.id">
+            <ng-container>
+              <ion-item button detail="true" class="ion-activated" (click)="setGruppo(p.gruppo)">
+                <ion-card-header>
+                  <ion-card-subtitle>Casa <ion-icon name="home"></ion-icon>
+                  </ion-card-subtitle>
+                  <ion-card-title><b>{{p.gruppo.nome}}</b></ion-card-title><br>
+                  Saldo personale: <font *ngIf=" p.saldo > 0; else minorBlock" color="green">{{p.saldo}}€</font><br>
+                  Codice del gruppo:
+                  <ion-chip>
+                    {{g.codice}}
+                    <ion-icon name="people-circle-outline"></ion-icon> 
+                     
+                  </ion-chip>
+                  <ng-template #minorBlock>
+                    <font color="red">{{p.saldo}}€</font>
+                  </ng-template>
+                </ion-card-header>
+              </ion-item>
+            </ng-container>
+            
+            <ion-card-content *ngIf="g.id==p.gruppo.id && p.utente.id==utente.id">
+              <b>Partecipanti:</b><br>
+                <ng-container *ngFor="let p of ug2$">
+                  <ion-chip *ngIf="g.id==p.gruppo.id &&  p.utente.id!=utente.id">
+                    <b>{{p.utente.nome}} {{p.utente.cognome}}</b>
+                  <ion-avatar>
+                    <img src={{p.utente.link}} />
+                  </ion-avatar>
+                </ion-chip>
+              </ng-container>
+             
+            </ion-card-content>
+          </ion-card>
+        </ng-template>
+      </ng-container>
+    </ng-container>
+    </ng-container>
+  </div>
+
+
+    <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+      <ion-fab-button size="small">
+        <ion-icon name="add" ></ion-icon>
+      </ion-fab-button>
+      <ion-fab-list side="start" (click)="presentModal()">
+        <ion-fab-button color="secondary">
+          <ion-icon name="duplicate-outline" class="text-danger"></ion-icon>
+          
+        </ion-fab-button>
+      </ion-fab-list>
+      <ion-fab-list side="end">
+        <ion-fab-button color="secondary" (click)="presentPopJoin()">
+          <ion-icon name="enter-outline" class="text-success" ></ion-icon><br>
+        
+        </ion-fab-button>
+      </ion-fab-list>
+    </ion-fab>
+
+  </ion-content>
+
+  <ion-router-outlet id="main"></ion-router-outlet>
+</ion-menu>

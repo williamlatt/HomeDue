@@ -1,0 +1,8 @@
+{
+  "name": "MyDues",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}

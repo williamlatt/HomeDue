@@ -1,0 +1,23 @@
+<app-header></app-header>
+<app-menu ></app-menu>
+<ion-content >
+<ion-tabs>
+  <ion-tab-bar selectedTab="about" color="medium" slot="bottom">
+    <ion-tab-button tab="spesa">
+      <ion-icon name="list-outline"></ion-icon>
+      <ion-label>Spese</ion-label>
+      <ion-badge>6</ion-badge>
+    </ion-tab-button>
+    <ion-tab-button tab="about">
+      <ion-icon name="information-circle-outline"></ion-icon>
+      <ion-label>About</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
+<ion-fab vertical="bottom" horizontal="center" slot="fixed" color="danger">
+  <ion-fab-button size="small" (click)="presentModal()">
+    <ion-icon name="cart-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+<router-outlet></router-outlet>
+</ion-content>

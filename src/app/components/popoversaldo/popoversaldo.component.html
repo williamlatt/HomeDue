@@ -1,0 +1,37 @@
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <form [formGroup]="myForm" (ngSubmit)="sendSaldo()">
+        <ion-list>
+          <ion-list-header class="h6-bold justify">Con chi vuoi dividere la spesa?</ion-list-header>
+                  <ion-select #utente multiple="false" placeholder="Seleziona un'utente " formControlName="beneficiario" >
+                    <ng-container *ngIf="(io$ | async) as utente">
+                    <ng-container *ngFor="let ug of utenti">
+                    <ng-container *ngIf="ug.gruppo.id === idGruppo && ug.utente.id !== utente.id">
+                    <ion-select-option value="{{ug.utente.id}}">{{ug.utente.nome}} {{ug.utente.cognome}}</ion-select-option>
+                    </ng-container>
+                  </ng-container>
+                </ng-container>
+                  </ion-select>
+                  <ion-item lines="none">
+                  <p ion-text class="text05 ml-3" *ngIf="myForm.get('beneficiario').touched && myForm.get('beneficiario').invalid">
+                    <ion-text color="danger small">{{ "E' richiesto almeno un beneficiario" }}</ion-text>
+                  </p>
+                </ion-item>
+                  
+            <ion-item>
+                  <ion-input #saldo type="number" min="1" placeholer="Importo che vuoi saldare" formControlName="importo">€ </ion-input>
+                  
+            </ion-item>
+            <ion-item lines="none">
+            <p ion-text class="text05 ml-3" *ngIf="myForm.get('importo').touched && myForm.get('importo').invalid">
+              <ion-text color="danger small">{{ 'Importo Richiesto e maggiore di 0' }}</ion-text>
+            </p>
+          </ion-item>
+            <ion-button type="submit" expand="full" display="full" slot="center" size="medium" [disabled]="!myForm.valid" >Invia richiesta saldo</ion-button>
+        </ion-list>
+        </form>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+

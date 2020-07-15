@@ -1,0 +1,32 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Pannello creazione nuovo gruppo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-fab horizontal="end" vertical="top" slot="fixed" edge>
+    <ion-fab-button size="small" color="danger">
+      <ion-icon name="close-outline" (click)="dismiss()"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <form [formGroup]="groupFormModel" class="list-form">
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-no-padding">
+        <ion-item>
+          <ion-label position="floating">{{'Nome del gruppo'}}</ion-label>
+          <ion-input formControlName="nome" type='text'></ion-input>
+        </ion-item>
+          <ion-label position='stacked' *ngIf="groupFormModel.get('nome').touched && groupFormModel.get('nome').invalid "></ion-label>
+          <ion-item>
+            <ion-label position="floating">{{'Immagine del gruppo(Facoltativa)'}}</ion-label>
+            <ion-input  type='text'></ion-input>
+          </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-button expand="block" shape="round" color="success" class="mt-4" (click)="newGruppo()" [disabled]="!groupFormModel.valid" tappable >Crea Gruppo</ion-button>
+  </ion-grid>
+</form>
+</ion-content>
+

@@ -1,0 +1,20 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Spesa {{spesa.descrizione}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Chiudi</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+  <ion-card>
+    
+    <ion-card-header>
+      <ion-card-subtitle>{{spesa.importo}}€</ion-card-subtitle>
+      <ion-card-title>{{spesa.descrizione}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <img src="{{spesa.link}}" class="imggrande" />
+    </ion-card-content>
+  </ion-card>
+</ion-content>

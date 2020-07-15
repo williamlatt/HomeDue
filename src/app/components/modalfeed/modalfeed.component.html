@@ -1,0 +1,80 @@
+    <ion-header  translucent>
+      <ion-toolbar color="primary">
+        <ion-buttons slot="secondary">
+          <ion-button (click)="close()" >
+            <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+          </ion-button>
+         
+        </ion-buttons>
+        
+        <ion-title>Events Feed</ion-title>
+      </ion-toolbar>
+      </ion-header>
+
+
+ <ion-content fullscreen>    
+<ion-list>
+    <ion-item-divider color="secondary">
+        <ion-label>
+          Spese Eliminate
+        </ion-label>
+      </ion-item-divider>
+      
+       <ng-container *ngFor="let fa of feed2$ ">
+        <ng-container *ngIf="fa.note === 'Delete'">
+        <ion-item-sliding>
+        <ion-item href="#">
+          <ion-label>
+            <h2>{{fa.spesa.descrizione}}</h2>
+            <p>{{fa.spesa.importo}}€</p>
+            <p>Associata a: <b>{{fa.spesa.gruppo.nome}}</b></p>
+            <p>Data Eliminazione: <b>{{fa.dataPubblicazione}}</b></p>
+          </ion-label>
+          <ion-note slot="end">
+            {{fa.spesa.dataPubblicazione}}
+          </ion-note>
+        </ion-item>
+    
+        <ion-item-options side="end">
+          <ion-item-option (click)="restore(fa)"color="tertiary">
+            <ion-icon name="refresh-outline"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+        </ng-container>
+       </ng-container>
+        
+      <ion-item-divider  color="secondary">   
+        <ion-label>
+          Richieste Saldo
+        </ion-label>
+      </ion-item-divider>
+      <ng-container *ngFor="let fa of feed2$ ">
+        <ng-container *ngIf="fa.note === 'Saldo'">
+        <ion-item-sliding >
+        <ion-item href="#">
+            <ion-label>
+              <h2>{{fa.spesa.descrizione}}</h2>
+              <p>{{fa.spesa.importo}}€</p>
+              <p>Associata a: <b>{{fa.spesa.gruppo.nome}}</b></p>
+              <p>Data Eliminazione: <b>{{fa.dataPubblicazione}}</b></p>
+            </ion-label>
+            <ion-note slot="end">
+              {{fa.spesa.dataPubblicazione}}
+            </ion-note>
+          </ion-item>
+      
+          <ion-item-options side="end">
+            <ion-item-option color="success" (click)="Saldo(fa, true)">
+              <ion-icon name="checkmark-outline"></ion-icon>
+            </ion-item-option>
+            <ion-item-option color="danger" (click)="Saldo(fa, false)">
+              <ion-icon name="close-outline"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ng-container>
+       </ng-container>
+</ion-list>
+</ion-content> 
+
