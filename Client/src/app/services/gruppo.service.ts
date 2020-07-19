@@ -39,6 +39,9 @@ export class GruppoService {
         return this.http.post<Gruppo>(URL.GRUPPO_ID, id);
     }
     getGruppo(): BehaviorSubject<Gruppo> {
+        this.storage.get(GRUPPO_STORAGE).then((gruppo) => {
+            this.gruppo$.next(gruppo);
+        });
         return this.gruppo$;
     }
 }

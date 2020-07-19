@@ -47,7 +47,11 @@ export class ModalgruppoComponent implements OnInit {
     const alert = await this.alertController.create({
       header: 'Registrazione Gruppo',
       message: 'Avvenuta con successo, benvenuto nel tuo nuovo gruppo!',
-      buttons: ['OK']
+      buttons:  [{text: 'Okay',
+        handler: () => {
+          location.reload();
+        }
+      }]
     });
     await alert.present();
   }
@@ -56,7 +60,11 @@ export class ModalgruppoComponent implements OnInit {
       const alert = await this.alertController.create({
         header: 'Registrazione Gruppo',
         message: 'La registrazione non è andata a buon fine riprova',
-        buttons: ['OK']
+        buttons:  [{text: 'Okay',
+        handler: () => {
+          location.reload();
+        }
+      }]
       });
       await alert.present();
 }

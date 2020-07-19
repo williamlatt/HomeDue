@@ -35,7 +35,7 @@
                   <ion-card-subtitle>Casa <ion-icon name="home"></ion-icon>
                   </ion-card-subtitle>
                   <ion-card-title color="primary"><b>{{p.gruppo.nome}}</b></ion-card-title><br>
-                  Saldo personale: <font *ngIf=" p.saldo > 0; else minorBlock" color="green">{{p.saldo}}€</font><br>
+                  Saldo personale: <font *ngIf=" p.saldo > 0; else minorBlock" color="green">{{p.saldo.toFixed(2)}}€</font><br>
                   Codice del gruppo:
                   <ion-chip>
                     {{g.codice}}
@@ -43,7 +43,7 @@
                      
                   </ion-chip>
                   <ng-template #minorBlock>
-                    <font color="red">{{p.saldo}}€</font>
+                    <font color="red">{{p.saldo.toFixed(2)}}€</font>
                   </ng-template>
                 </ion-card-header>
               </ion-item>
@@ -76,7 +76,7 @@
                   <ion-card-subtitle>Casa <ion-icon name="home"></ion-icon>
                   </ion-card-subtitle>
                   <ion-card-title><b>{{p.gruppo.nome}}</b></ion-card-title><br>
-                  Saldo personale: <font *ngIf=" p.saldo > 0; else minorBlock" color="green">{{p.saldo}}€</font><br>
+                  Saldo personale: <font *ngIf=" p.saldo > 0; else minorBlock" color="green">{{p.saldo.toFixed(2)}}€</font><br>
                   Codice del gruppo:
                   <ion-chip>
                     {{g.codice}}
@@ -84,7 +84,7 @@
                      
                   </ion-chip>
                   <ng-template #minorBlock>
-                    <font color="red">{{p.saldo}}€</font>
+                    <font color="red">{{p.saldo.toFixed(2)}}€</font>
                   </ng-template>
                 </ion-card-header>
               </ion-item>
@@ -115,13 +115,13 @@
         <ion-icon name="add" ></ion-icon>
       </ion-fab-button>
       <ion-fab-list side="start" (click)="presentModal()">
-        <ion-fab-button color="secondary">
+        <ion-fab-button color="white">
           <ion-icon name="duplicate-outline" class="text-danger"></ion-icon>
           
         </ion-fab-button>
       </ion-fab-list>
       <ion-fab-list side="end">
-        <ion-fab-button color="secondary" (click)="presentPopJoin()">
+        <ion-fab-button color="white" (click)="presentPopJoin()">
           <ion-icon name="enter-outline" class="text-success" ></ion-icon><br>
         
         </ion-fab-button>

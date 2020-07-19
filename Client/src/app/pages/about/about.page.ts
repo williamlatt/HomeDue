@@ -31,6 +31,7 @@ export class AboutPage implements OnInit {
   public saldi;
   public valori;
   private partecipanti;
+  private contr;
   @ViewChild ('barChart', {static: false}) barChart;
  public gruppos;
   bars: any;
@@ -122,6 +123,8 @@ calcoloSaldi(id) {
   ionViewDidEnter() {
     this.valori = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     this.us$ = this.utente_spesaService.listaSpese();
+    this.g$ = this.gruppoService.getGruppo();
+    this.contr = this.g$.getValue().id;
     this.us$.subscribe((m) => {
       m.forEach(element => {
         if(element.spesa.gruppo.id === this.g$.getValue().id && element.utente.id === this.utente$.getValue().id){

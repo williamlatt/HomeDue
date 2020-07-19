@@ -315,7 +315,7 @@ ngAfterViewInit() {
       if (!this.regex2.test(x.value)) {
         x.value = x.value.slice(0, x.value.length - 1);
       }
-      if (x.value.slice(x.value.length, x.value.length - 1) !== '+') {
+      if (x.value.slice(x.value.length - 1, x.value.length) !== '+') {
         valu.value = eval(x.value);
       }
     }
@@ -384,6 +384,7 @@ ngAfterViewInit() {
                 this.totale += Number (data[element]);
               }
             );
+            
             if (this.totale === this.sommaSpese) {
               Object.getOwnPropertyNames(data).forEach(element => {
                 this.allPartecipanti.some((item) => {

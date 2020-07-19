@@ -3,7 +3,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-
+  
   <ion-list id="list" class="md list-md hydrated">
     <ng-container *ngFor="let s of s$ |async |slice:0:slice;">
       <ng-container *ngIf="s.gruppo.id === g$.getValue().id">
@@ -73,7 +73,7 @@
         <ion-icon slot="bottom" name="trash-outline"></ion-icon>
         Cancella
       </ion-item-option>
-      <ion-item-option *ngIf="s.link !== ''" (click)="openPopover(s)">
+      <ion-item-option *ngIf="s.link !== null " (click)="openPopover(s)">
         <ion-icon slot="bottom" name="image-outline"></ion-icon> Immagine
       </ion-item-option>
     </ion-item-options>
